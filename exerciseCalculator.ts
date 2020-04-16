@@ -8,6 +8,30 @@ interface exercisesValues {
   average: number;
 }
 
+interface targetAndDays {
+  target: number;
+  days: Array<number>;
+}
+
+const parseArguments = (args: Array<string>): targetAndDays => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  const [, , target, ...days] = process.argv;
+  const daysArray: Array<number> = [];
+
+  for (const day of days) {
+    daysArray.push(Number(day));
+  }
+  if (!isNaN(Number(target)) && !daysArray.includes(NaN)) {
+    return {
+      target: Number(target),
+      days: daysArray,
+    };
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+};
+
 const calculateExercises = (
   exersisesDays: Array<number>,
   target: number
@@ -28,13 +52,19 @@ const calculateExercises = (
   const average = totalHours / periodLength;
 
   if (average < target) {
-    success = false;
-    ratings = 1;
-    ratingsDescription = 'not too bad but could be better';
+    if (average < target / 2) {
+      success = false;
+      ratings = 1;
+      ratingsDescription = 'you can do better then this';
+    } else {
+      success = false;
+      ratings = 2;
+      ratingsDescription = 'not too bad but could be better';
+    }
   } else if (average >= target) {
     success = true;
     ratings = 3;
-    ratingsDescription = 'Thats better';
+    ratingsDescription = 'You are doing great keep it up';
   }
   return {
     periodLength,
@@ -47,4 +77,11 @@ const calculateExercises = (
   };
 };
 
-console.log(calculateExercises([3, 3, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { target, days } = parseArguments(process.argv);
+  console.log(calculateExercises(days, target));
+} catch (e) {
+  console.log('Error, something bad happened, message: ', e.message);
+}
+
+// console.log(calculateExercises([0, 4, 0, 1, 0, 3, 1], 2));
