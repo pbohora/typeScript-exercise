@@ -16,7 +16,7 @@ interface targetAndDays {
 const parseArguments = (args: Array<string>): targetAndDays => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
-  const [, , target, ...days] = process.argv;
+  const [, , target, ...days] = args;
   const daysArray: Array<number> = [];
 
   for (const day of days) {
