@@ -8,11 +8,11 @@ app.get('/hello', (_req, res) => {
 });
 
 app.get('/bmi', (req, res) => {
-  const premHeight = Number(req.query.height);
-  const paremWeight = Number(req.query.weight);
+  const paramHeight = Number(req.query.height);
+  const paramWeight = Number(req.query.weight);
 
   try {
-    const { height, weight } = validateParameters(premHeight, paremWeight);
+    const { height, weight } = validateParameters(paramHeight, paramWeight);
     const result = calculateBmi(height, weight);
     res.json({ height, weight, bmi: result });
   } catch (e) {
