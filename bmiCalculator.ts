@@ -1,4 +1,4 @@
-interface bmiValues {
+export interface bmiValues {
   height: number;
   weight: number;
 }
@@ -16,7 +16,22 @@ const parseArgument = (args: Array<string>): bmiValues => {
     throw new Error('Provided values were not numbers!');
   }
 };
-const calculateBmi = (height: number, weight: number): string => {
+
+export const validateParameters = (
+  height: number,
+  weight: number
+): bmiValues => {
+  if (height && weight && !isNaN(height) && !isNaN(weight)) {
+    return {
+      height,
+      weight,
+    };
+  } else {
+    throw new Error('malformatted parameters');
+  }
+};
+
+export const calculateBmi = (height: number, weight: number): string => {
   const heightInMeter = height / 100;
   const result = weight / (heightInMeter * heightInMeter);
   if (result < 15) {
@@ -36,6 +51,7 @@ const calculateBmi = (height: number, weight: number): string => {
   } else if (result > 40) {
     return 'Obese Class III (Very severely obese)';
   }
+  return 'null';
 };
 
 try {
