@@ -1,4 +1,4 @@
-interface exercisesValues {
+interface ExercisesValues {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -8,12 +8,12 @@ interface exercisesValues {
   average: number;
 }
 
-interface targetAndDays {
+interface TargetAndDays {
   target: number;
   days: Array<number>;
 }
 
-const parseArguments = (args: Array<string>): targetAndDays => {
+const parseArguments = (args: Array<string>): TargetAndDays => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
   const [, , target, ...days] = args;
@@ -35,7 +35,7 @@ const parseArguments = (args: Array<string>): targetAndDays => {
 const calculateExercises = (
   exersisesDays: Array<number>,
   target: number
-): exercisesValues => {
+): ExercisesValues => {
   const periodLength = exersisesDays.length;
   let trainingDays = 0;
   let success = false;

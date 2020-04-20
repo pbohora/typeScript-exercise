@@ -1,9 +1,9 @@
-export interface bmiValues {
+export interface BmiValues {
   height: number;
   weight: number;
 }
 
-const parseArgument = (args: Array<string>): bmiValues => {
+const parseArgument = (args: Array<string>): BmiValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
   if (args.length > 4) throw new Error('Too many arguments');
 
@@ -20,7 +20,7 @@ const parseArgument = (args: Array<string>): bmiValues => {
 export const validateParameters = (
   height: number,
   weight: number
-): bmiValues => {
+): BmiValues => {
   if (height && weight && !isNaN(height) && !isNaN(weight)) {
     return {
       height,
