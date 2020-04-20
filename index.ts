@@ -1,7 +1,10 @@
 import express from 'express';
 import { calculateBmi, validateParameters } from './bmiCalculator';
+import { calculateExercises } from './exerciseCalculator';
 
 const app = express();
+
+app.use(express.json());
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack');
@@ -14,9 +17,36 @@ app.get('/bmi', (req, res) => {
   try {
     const { height, weight } = validateParameters(paramHeight, paramWeight);
     const result = calculateBmi(height, weight);
-    res.json({ height, weight, bmi: result });
+    res.status(200).json({ height, weight, bmi: result });
   } catch (e) {
-    res.json({ error: e.message });
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.post('/exercises', (req, res) => {
+  const { dailyExercises, target } = req.body;
+  console.log(isNaN(target));
+  try {
+    if (dailyExercises && target) {
+      if (
+        !isNaN(target) &&
+        Array.isArray(dailyExercises) &&
+        !dailyExercises.includes(NaN)
+      ) {
+        const result = calculateExercises(dailyExercises, target);
+        res.status(200).json(result);
+      } else {
+        {
+          throw new Error('malformatted parameters!');
+        }
+      }
+    } else {
+      {
+        throw new Error('parameters missing!');
+      }
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 

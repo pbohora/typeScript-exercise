@@ -1,4 +1,4 @@
-interface ExercisesValues {
+export interface ExercisesValues {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -8,12 +8,12 @@ interface ExercisesValues {
   average: number;
 }
 
-interface TargetAndDays {
+export interface TargetAndDays {
   target: number;
   days: Array<number>;
 }
 
-const parseArguments = (args: Array<string>): TargetAndDays => {
+export const parseArguments = (args: Array<string>): TargetAndDays => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
   const [, , target, ...days] = args;
@@ -32,7 +32,7 @@ const parseArguments = (args: Array<string>): TargetAndDays => {
   }
 };
 
-const calculateExercises = (
+export const calculateExercises = (
   exersisesDays: Array<number>,
   target: number
 ): ExercisesValues => {
